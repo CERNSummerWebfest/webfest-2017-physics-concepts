@@ -60,7 +60,9 @@ export default class Concept extends React.Component {
           <div className='col-xs -offset-2 col-xs-3'>
             <img style={{ width: '200px' }} src={'/' + this.props.concept.id + '.png'} />
             <h2>Magnitude</h2>
-            <MarkdownRenderer markdown={this.props.concept.magnitude || ''} />
+            <Latex>
+              {this.props.concept.magnitude}
+            </Latex>
             <h2>Related links</h2>
             <MarkdownRenderer markdown={this.props.concept.related || ''} />
           </div>
