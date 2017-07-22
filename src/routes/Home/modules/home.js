@@ -1,8 +1,11 @@
 import { Result } from '../components/ResultComponent'
 import React from 'react'
+import Concept from '../components/Concept'
 
 export const SEARCH_START = 'SEARCH_START'
 export const SEARCH_END = 'SEARCH_END'
+
+export const GET_COMPONENT = 'GET_COMPONENT'
 
 export function search (str) {
   return (dispatch, getState) => {
@@ -13,7 +16,7 @@ export function search (str) {
         results: []
       })
     } else {
-      fetch(`http://localhost:3000/compare?str=${str}`)
+      fetch(`http://localhost:3000/api/compare?str=${str}`)
         .then(response => response.json())
         .then(json => {
           dispatch({
@@ -25,6 +28,19 @@ export function search (str) {
   }
 }
 
+export function getComponent (id) {
+  return (dispatch, getState) => {
+    fetch(`http://localhost:3000/api/concept/${id}`)
+      .then(response => response.json())
+      .then(json => {
+        dispatch({
+          type: GET_COMPONENT,
+          concept: json
+        })
+      })
+  }
+}
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -32,16 +48,18 @@ const ACTION_HANDLERS = {
   [SEARCH_START]: (state, action) => state,
   [SEARCH_END]: (state, action) => {
     return Object.assign({}, state, { results: action.results.map(res => (
-      <Result key={res._id} title={res.title} description={res.description} />
+      <Result key={res._id} title={res.title} definition={res.definition} id={res._id} />
     )) })
   },
+  [GET_COMPONENT]: (state, action) => Object.assign({}, state, { concept: action.concept })
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-  results: []
+  results: [],
+  concept: { title: '', definition: '' }
 }
 export default function homeReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]

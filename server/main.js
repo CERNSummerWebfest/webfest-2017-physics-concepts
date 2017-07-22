@@ -9,8 +9,10 @@ const compress = require('compression')
 const app = express()
 app.use(compress())
 
+const mongodb = require('mongodb')
+
 // Retrieve
-let MongoClient = require('mongodb').MongoClient
+let MongoClient = mongodb.MongoClient
 
 let concepts
 
@@ -22,8 +24,14 @@ MongoClient.connect('mongodb://localhost:27017/cern_db', function (err, db) {
   }
 })
 
-app.get('/compare', function (req, res) {
+app.get('/api/compare', function (req, res) {
   concepts.find({ 'title': new RegExp(req.query['str'], 'i') }).toArray((err, doc) => {
+    res.send(doc)
+  })
+})
+
+app.get('/api/concept/:id', function (req, res) {
+  concepts.findOne({ '_id': mongodb.ObjectID(req.params.id) }, (err, doc) => {
     res.send(doc)
   })
 })

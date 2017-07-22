@@ -1,15 +1,24 @@
 // We only need to import the modules necessary for initial render
 import CoreLayout from '../layouts/PageLayout/PageLayout'
-import Home from './Home'
+import ConceptContainer from './Home/containers/ConceptContainer'
+import React from 'react'
+import { IndexRoute, Route } from 'react-router'
+import { injectReducer } from '../store/reducers'
+import HomeViewContainer from './Home/containers/HomeViewContainer'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
 
-export const createRoutes = (store) => ({
-  path        : '/',
-  component   : CoreLayout,
-  indexRoute  : Home(store),
-})
+export const createRoutes = (store) => {
+  const reducer = require('./Home/modules/home').default
+  injectReducer(store, { key: 'home', reducer })
+
+  return (
+    <Route path='/' component={CoreLayout}>
+      <IndexRoute component={HomeViewContainer} />
+      <Route path='concept/:id' component={ConceptContainer} />
+    </Route>)
+}
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically
     using getChildRoutes with the following signature:

@@ -10,6 +10,10 @@ export class HomeView extends React.Component {
     search: PropTypes.func.isRequired
   }
 
+  componentWillMount () {
+    this.props.search('')
+  }
+
   render () {
     return (
       <div>
