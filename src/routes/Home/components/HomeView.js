@@ -19,7 +19,10 @@ export class HomeView extends React.Component {
   render () {
     return (
       <div>
-        <h1 style={{ marginBottom: '50px' }}>Welcome</h1>
+        <div className="text-center" style={{ marginBottom: '50px' }}>
+          <h1 style={{ marginBottom: '10px' }}>Physics concepts</h1>
+          <img style={{ width: '200px' }} src={'/logo.png'} />
+        </div>
         <FormGroup>
           <FormControl id='searchbar' autoFocus='True' ref={(searchbar) => { this.searchbar = searchbar }} type='text'
             placeholder='Search' onChange={(e) => this.props.search(e.target.value)} value={this.props.str}

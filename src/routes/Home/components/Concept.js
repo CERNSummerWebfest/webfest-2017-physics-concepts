@@ -4,7 +4,7 @@ import Latex from 'react-latex'
 import Linkify from 'react-linkify'
 import { FormControl, FormGroup } from 'react-bootstrap'
 import { browserHistory } from 'react-router'
-import MarkdownRenderer from 'react-markdown-renderer';
+import MarkdownRenderer from 'react-markdown-renderer'
 
 export default class Concept extends React.Component {
   static propTypes = {
@@ -26,6 +26,10 @@ export default class Concept extends React.Component {
               onClick={() => browserHistory.goBack()} style={{ fontSize: '16px' }}>
               Back
             </button>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-xs-12' style={{ textAlign: 'center' }}>
             <h1 style={{ marginTop: '50px' }}>{this.props.concept.concept}</h1>
           </div>
         </div>
@@ -54,6 +58,8 @@ export default class Concept extends React.Component {
             <MarkdownRenderer markdown={this.props.concept.unknown || ''} />
           </div>
           <div className='col-xs -offset-2 col-xs-3'>
+            <img style={{ width: '200px' }} src={'/' + this.props.concept.id + '.png'} />
+            <h2>Magnitude</h2>
             <MarkdownRenderer markdown={this.props.concept.magnitude || ''} />
           </div>
         </div>
