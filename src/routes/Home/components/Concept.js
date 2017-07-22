@@ -61,6 +61,8 @@ export default class Concept extends React.Component {
             <img style={{ width: '200px' }} src={'/' + this.props.concept.id + '.png'} />
             <h2>Magnitude</h2>
             <MarkdownRenderer markdown={this.props.concept.magnitude || ''} />
+            <h2>Related links</h2>
+            <MarkdownRenderer markdown={this.props.concept.related || ''} />
           </div>
         </div>
 
