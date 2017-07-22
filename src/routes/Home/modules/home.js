@@ -9,7 +9,10 @@ export const GET_COMPONENT = 'GET_COMPONENT'
 
 export function search (str) {
   return (dispatch, getState) => {
-    dispatch({ type: SEARCH_START })
+    dispatch({
+      type: SEARCH_START,
+      str: str
+    })
     if (str === '') {
       dispatch({
         type: SEARCH_END,
@@ -45,10 +48,10 @@ export function getComponent (id) {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [SEARCH_START]: (state, action) => state,
+  [SEARCH_START]: (state, action) => Object.assign({}, state, { str: action.str }),
   [SEARCH_END]: (state, action) => {
     return Object.assign({}, state, { results: action.results.map(res => (
-      <Result key={res._id} title={res.title} definition={res.definition} id={res._id} />
+      <Result key={res._id} concept={res.concept} definition={res.definition} id={res.id} />
     )) })
   },
   [GET_COMPONENT]: (state, action) => Object.assign({}, state, { concept: action.concept })
@@ -59,6 +62,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
   results: [],
+  str: '',
   concept: { title: '', definition: '' }
 }
 export default function homeReducer (state = initialState, action) {

@@ -25,13 +25,13 @@ MongoClient.connect('mongodb://localhost:27017/cern_db', function (err, db) {
 })
 
 app.get('/api/compare', function (req, res) {
-  concepts.find({ 'title': new RegExp(req.query['str'], 'i') }).toArray((err, doc) => {
+  concepts.find({ concept: new RegExp(req.query['str'], 'i') }).toArray((err, doc) => {
     res.send(doc)
   })
 })
 
 app.get('/api/concept/:id', function (req, res) {
-  concepts.findOne({ '_id': mongodb.ObjectID(req.params.id) }, (err, doc) => {
+  concepts.findOne({ 'id': req.params.id }, (err, doc) => {
     res.send(doc)
   })
 })
