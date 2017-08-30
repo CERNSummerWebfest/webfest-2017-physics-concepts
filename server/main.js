@@ -17,7 +17,7 @@ let MongoClient = mongodb.MongoClient
 let concepts
 
 // Connect to the db
-MongoClient.connect('mongodb://localhost:27017/cern_db', function (err, db) {
+MongoClient.connect('mongodb://ds111124.mlab.com:11124/cern_db', function (err, db) {
   if (!err) {
     console.log('Connected to mongodb')
     concepts = db.collection('concepts')
